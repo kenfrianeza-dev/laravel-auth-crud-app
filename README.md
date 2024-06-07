@@ -30,6 +30,10 @@ SimpleAuthCRUD is a web application that provides basic authentication and CRUD 
 
 1. Clone the repository: `git clone https://github.com/kenfrianeza-dev/laravel-auth-crud-app`
 
+```bash
+git clone https://github.com/kenfrianeza-dev/laravel-auth-crud-app
+```
+
 2. Navigate to the project directory:
 
 ```bash
@@ -63,5 +67,9 @@ npm run dev
 ```
 
 8. Open your browser and navigate to `http://localhost:8000` to view the app.
+
+```bash
+http://localhost:8000
+```
 
 ---
