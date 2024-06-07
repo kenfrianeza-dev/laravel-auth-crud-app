@@ -69,7 +69,7 @@
 
                                                 <button type="submit"
                                                     {{ auth()->check() && $u->id === auth()->id() ? 'disabled' : '' }}
-                                                    class="{{ $u->id !== auth()->id() ? 'cursor-pointer' : 'cursor-not-allowed hover:bg-white text-red-300' }} block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100 transition">
+                                                    class="{{ $u->id !== auth()->id() ? 'cursor-pointer' : 'cursor-not-allowed hover:bg-white text-red-200' }} block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100 transition">
                                                     Delete
                                                 </button>
                                             </form>

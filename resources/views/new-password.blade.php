@@ -6,7 +6,7 @@
             class="w-full max-w-[500px] text-slate-800 p-4 mx-4 space-y-2 shadow-md rounded-md">
             @csrf
             <input name="token" type="text" class="hidden" value="{{ $token }}">
-            <h1 class="text-start">We will send a link to your email, use that link to reset your
+            <h1 class="text-start font-bold text-lg">Enter your new password
                 password.</h1>
             @if (session()->has('invalid'))
                 <div class="p-4 my-4 bg-rose-200  text-rose-800 rounded">
