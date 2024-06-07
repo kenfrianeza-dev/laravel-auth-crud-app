@@ -83,4 +83,19 @@ class AuthController extends Controller
         $user->delete();
         return redirect('dashboard')->with('success', 'User deleted successfully');
     }
+
+    // handles the updating of user's name
+    public function update(Request $request, User $user) {
+        // validates the input field
+        $request->validate([
+            'name' => 'required|string|max:255',
+        ]);
+
+        // updates the user's name in the database
+        $user->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('dashboard')->with('success', 'User name updated successfully');
+    }
 }

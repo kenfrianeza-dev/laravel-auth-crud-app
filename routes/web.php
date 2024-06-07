@@ -9,6 +9,7 @@ Route::middleware(['authenticated'])->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
     Route::get('/logout', [AuthController::class, 'logout']);
     Route::delete('/users/{user}', [AuthController::class, 'destroy'])->name('delete-user');
+    Route::patch('/users/{user}', [AuthController::class, 'update'])->name('update-user');
 });
 
 // Routes for not authenticated users

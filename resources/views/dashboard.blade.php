@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Dashboard</title>
+    @vite('resources/css/app.css')
     @include('includes.header')
 </head>
 
@@ -58,6 +59,7 @@
                                     <div id="actionsDropdown-{{ $u->id }}"
                                         class="absolute z-10 -left-[72px] -top-8 w-20 bg-white border border-slate-200 rounded-md shadow-lg hidden">
                                         <a href="#"
+                                            onclick="editUser('{{ $u->id }}', '{{ $u->name }}')"
                                             class="block px-4 py-2 text-sm text-slate-800 hover:bg-slate-200 transition">Edit</a>
                                         @auth
                                             <form id="deleteForm-{{ $u->id }}"
@@ -65,7 +67,7 @@
                                                 @csrf
                                                 @method('DELETE')
 
-                                                <button type="submit" {{-- conditionally rendering if the button is enabled or disabled based on the current user and its id --}} {{-- the current user's button is disabled and the button of the rest of the users is enabled --}}
+                                                <button type="submit"
                                                     {{ auth()->check() && $u->id === auth()->id() ? 'disabled' : '' }}
                                                     class="{{ $u->id !== auth()->id() ? 'cursor-pointer' : 'cursor-not-allowed hover:bg-white text-red-300' }} block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100 transition">
                                                     Delete
@@ -81,6 +83,32 @@
             </div>
         </div>
     </div>
+
+    <!-- Modal -->
+    <div id="editModal" class="bg-slate-800/25 backdrop-blur-sm fixed z-10 inset-0 overflow-y-auto hidden">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="bg-white p-4 rounded-lg">
+                <h2 class="text-lg font-semibold mb-2">Edit a user</h2>
+                <form method="POST" id="editForm">
+                    @csrf
+                    @method('PATCH')
+                    <input type="hidden" id="editUserId" name="userId">
+                    <div class="mb-4">
+                        <label for="editUserName" class="block text-sm font-medium text-gray-700">Name</label>
+                        <input type="text" id="editUserName" name="name" autocomplete="name"
+                            class="p-2 mt-1 border focus:ring-slate-500 focus:border-slate-500 block w-full shadow-sm sm:text-sm border-slate-300 rounded-md">
+                    </div>
+                    <div class="flex justify-start">
+                        <button type="button" onclick="cancelEditUser()"
+                            class="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-300 hover:bg-gray-400 rounded-md mr-2 transition">Cancel</button>
+                        <button type="submit"
+                            class="px-4 py-2 text-sm font-medium text-white bg-slate-800 hover:bg-slate-700 rounded-md transition">Update</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
     </div>
 
     <script>
@@ -98,8 +126,73 @@
             actionsDropdown.classList.toggle('hidden');
             openDropdownId = openDropdownId === userId ? null : userId;
         }
-    </script>
 
+        function editUser(userId, userName) {
+            // Populate modal fields with user data
+            document.getElementById('editUserId').value = userId;
+            document.getElementById('editUserName').value = userName;
+
+            // Update form action with the correct URL
+            document.getElementById('editForm').action = `/users/${userId}`;
+
+            // Hide actions dropdown
+            const actionsDropdown = document.getElementById(`actionsDropdown-${userId}`);
+            actionsDropdown.classList.add('hidden');
+
+            // Show the modal
+            document.getElementById('editModal').classList.remove('hidden');
+            document.getElementById('editModal').classList.add('fixed', 'inset-0');
+
+            // Focus on the name input field
+            document.getElementById('editUserName').focus();
+        }
+
+        function cancelEditUser() {
+            // Hide the modal
+            document.getElementById('editModal').classList.remove('fixed', 'inset-0');
+            document.getElementById('editModal').classList.add('hidden');
+        }
+
+        document.getElementById('editForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            // Get form data
+            let formData = new FormData(event.target);
+
+            // Send form data to the server via Fetch API
+            fetch(event.target.action, {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    cancelEditUser();
+                    location.reload();
+                    return response.json();
+                })
+                .then(data => {
+                    // Handle success response
+                    console.log(data);
+                    // Close modal
+                    cancelEditUser();
+                    // You may reload the page or update the UI as needed
+                })
+                .catch(error => {
+                    // Handle error
+                    console.error('There was a problem with your fetch operation:', error);
+                });
+        });
+
+        // Close actions dropdown when clicking outside of it
+        const backdrop = document.getElementById('editModal');
+        backdrop.addEventListener('click', (e) => {
+            if (e.target.matches('div')) {
+                backdrop.classList.add('hidden');
+            }
+        });
+    </script>
 </body>
 
 </html>
