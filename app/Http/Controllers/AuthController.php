@@ -77,4 +77,10 @@ class AuthController extends Controller
         // after logging out, redirect to the login page
         return redirect('login');
     }
+
+    // handles the user delete
+    public function destroy(User $user) {
+        $user->delete();
+        return redirect('dashboard')->with('success', 'User deleted successfully');
+    }
 }

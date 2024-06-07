@@ -45,7 +45,7 @@
                                 <td class="py-3 px-4">{{ $u->created_at->format('Y-m-d') }}</td>
 
                                 <td class="py-3 px-4 relative">
-                                    <button type="button"
+                                    <button type="button" onclick="toggleActions('{{ $u->id }}')"
                                         class="text-slate-800 hover:bg-slate-300 p-2 focus:outline-none rounded-full transition">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                             fill="currentColor" class="bi bi-three-dots" viewBox="0 0 16 16">
@@ -53,6 +53,26 @@
                                                 d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3m5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3" />
                                         </svg>
                                     </button>
+
+                                    {{-- Dropdown Actions --}}
+                                    <div id="actionsDropdown-{{ $u->id }}"
+                                        class="absolute z-10 -left-[72px] -top-8 w-20 bg-white border border-slate-200 rounded-md shadow-lg hidden">
+                                        <a href="#"
+                                            class="block px-4 py-2 text-sm text-slate-800 hover:bg-slate-200 transition">Edit</a>
+                                        @auth
+                                            <form id="deleteForm-{{ $u->id }}"
+                                                action="{{ route('delete-user', $u->id) }}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+
+                                                <button type="submit" {{-- conditionally rendering if the button is enabled or disabled based on the current user and its id --}} {{-- the current user's button is disabled and the button of the rest of the users is enabled --}}
+                                                    {{ auth()->check() && $u->id === auth()->id() ? 'disabled' : '' }}
+                                                    class="{{ $u->id !== auth()->id() ? 'cursor-pointer' : 'cursor-not-allowed hover:bg-white text-red-300' }} block w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-red-100 transition">
+                                                    Delete
+                                                </button>
+                                            </form>
+                                        @endauth
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -62,6 +82,24 @@
         </div>
     </div>
     </div>
+
+    <script>
+        let openDropdownId = null;
+
+        // Toggles the drop down action menu
+        function toggleActions(userId) {
+            const actionsDropdown = document.getElementById(`actionsDropdown-${userId}`);
+
+            if (openDropdownId !== null && openDropdownId !== userId) {
+                const openDropdown = document.getElementById(`actionsDropdown-${openDropdownId}`);
+                openDropdown.classList.add('hidden');
+            }
+
+            actionsDropdown.classList.toggle('hidden');
+            openDropdownId = openDropdownId === userId ? null : userId;
+        }
+    </script>
+
 </body>
 
 </html>
