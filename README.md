@@ -26,6 +26,17 @@ SimpleAuthCRUD is a web application that provides basic authentication and CRUD 
 
 ---
 
+#### Showcase
+
+![Login Page](/public/login.png)
+![Register Page](/public/register.png)
+![Forget Password Page](/public/forget-password.png)
+![Reset Password Page](/public/reset-password.png)
+![Dashboard Page](/public/dashboard.png)
+![Modal](/public/dashboard.png)
+
+---
+
 #### Installation and Usage:
 
 1. Clone the repository: `git clone https://github.com/kenfrianeza-dev/laravel-auth-crud-app`
