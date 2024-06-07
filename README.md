@@ -33,7 +33,7 @@ SimpleAuthCRUD is a web application that provides basic authentication and CRUD 
 ![Forget Password Page](/public/forget-password.png)
 ![Reset Password Page](/public/reset-password.png)
 ![Dashboard Page](/public/dashboard.png)
-![Modal](/public/dashboard.png)
+![Modal](/public/modal.png)
 
 ---
 
