@@ -68,4 +68,13 @@ class AuthController extends Controller
         // passing all the users and the current authenticated user from the database into the dashboard page
         return view('dashboard',  ['user' => $user, 'users' => $users]);
     }
+
+    // handles the logging out of the user
+    public function logout(Request $request) {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        // after logging out, redirect to the login page
+        return redirect('login');
+    }
 }

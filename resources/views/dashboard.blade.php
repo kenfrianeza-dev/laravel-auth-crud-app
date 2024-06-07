@@ -16,7 +16,7 @@
             <div class="w-full flex items-center gap-4">
                 <h1 class="text-xl font-bold">Dashboard</h1>
                 <h1 class="text-md ml-auto font-semibold">{{ $user->name }} ({{ $user->email }})</h1>
-                <a href="#"
+                <a href="logout"
                     class="px-4 py-2 text-sm font-medium text-white bg-slate-800 hover:bg-slate-700 rounded-md transition">Logout</a>
             </div>
             {{-- Table --}}

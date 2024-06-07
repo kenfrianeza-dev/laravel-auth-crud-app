@@ -7,6 +7,7 @@ use App\Http\Controllers\AuthController;
 // Routes for authenticated users
 Route::middleware(['authenticated'])->group(function () {
     Route::get('/dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+    Route::get('/logout', [AuthController::class, 'logout']);
 });
 
 // Routes for not authenticated users
