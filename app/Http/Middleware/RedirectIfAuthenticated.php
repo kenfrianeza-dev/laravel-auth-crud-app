@@ -16,6 +16,8 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // checks the user if authenticated, if it's authenticated redirect to the dashboard page
+        // this function prevents the user from going back to the guest pages(login/register page) if the user is logged in
         if (Auth::check()) {
             return redirect('/dashboard');
         }

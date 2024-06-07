@@ -16,6 +16,8 @@ class EnsureAuthenticated
      */
     public function handle(Request $request, Closure $next): Response
     {
+        // checks the user if not authenticated, if it's not authenticated redirect to the login page
+        // this function prevents the user to access the authorized pages (dashboard page) if the user is not logged in
         if (!Auth::check()) {
             return redirect('/login');
         }
