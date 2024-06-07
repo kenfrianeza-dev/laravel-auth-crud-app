@@ -59,7 +59,7 @@
             <button type="submit"
                 class="w-full bg-slate-800 hover:bg-slate-700 text-slate-200 p-2 rounded-md transition">Login</button>
             <div>
-                <a href="#" class="text-sm underline cursor-pointer">Forgot your
+                <a href="{{ route('forget-password') }}" class="text-sm underline cursor-pointer">Forgot your
                     password?</a>
             </div>
             <div class="flex flex-col items-center justify-center">

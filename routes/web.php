@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ForgetPasswordController;
 
 // Routes for authenticated users
 Route::middleware(['authenticated'])->group(function () {
@@ -19,4 +20,8 @@ Route::middleware(['guest'])->group(function () {
     Route::post('/login-user', [AuthController::class, 'loginUser'])->name('login-user');
     Route::get('/register', [AuthController::class, 'register']);
     Route::post('/register-user', [AuthController::class, 'registerUser'])->name('register-user');
+    Route::get('/forget-password', [ForgetPasswordController::class,'forgetPassword'])->name('forget-password');
+    Route::post('/forget-password', [ForgetPasswordController::class,'forgetPasswordPost'])->name('forget-password-post');
+    Route::get('/reset-password/{token}', [ForgetPasswordController::class,'resetPassword'])->name('reset-password');
+    Route::post('/reset-password', [ForgetPasswordController::class,'resetPasswordPost'])->name('reset-password-post');
 });

@@ -32,7 +32,7 @@ class AuthController extends Controller
 
         // checks the user if succesfully registered, and then return the message to the frontend
         if ($user) {
-            return back()->with('success', 'You have registered successfully');
+            return redirect('login')->with('success', 'You have registered successfully');
         } else {
             return back()->with('error', 'Something went wrong');
         }
@@ -96,6 +96,6 @@ class AuthController extends Controller
             'name' => $request->name,
         ]);
 
-        return redirect()->route('dashboard')->with('success', 'User name updated successfully');
+        return redirect('dashboard')->with('success', 'User name updated successfully');
     }
 }
