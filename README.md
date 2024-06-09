@@ -65,10 +65,10 @@ composer install
 php artisan migrate
 ```
 
-6. Start the server: `php artisan serve`
+6. Install dependencies: `npm run dev`
 
 ```bash
-php artisan serve
+npm install
 ```
 
 7. Start vite for tailwindcss: `npm run dev`
@@ -77,7 +77,13 @@ php artisan serve
 npm run dev
 ```
 
-8. Open your browser and navigate to `http://localhost:8000` to view the app.
+8. Start the server: `php artisan serve`
+
+```bash
+php artisan serve
+```
+
+9. Open your browser and navigate to `http://localhost:8000` to view the app.
 
 ```bash
 http://localhost:8000
